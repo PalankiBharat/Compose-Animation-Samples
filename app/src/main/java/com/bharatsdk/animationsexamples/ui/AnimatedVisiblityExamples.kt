@@ -1,19 +1,27 @@
 package com.bharatsdk.animationsexamples.ui
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.animation.slideIn
+import androidx.compose.animation.slideOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -193,6 +201,57 @@ fun AnimatedVisibilityAnimateOnceOnly() {
 
 }
 
+@OptIn(ExperimentalAnimationApi::class)
+@Composable
+fun AnimatedVisibilityDifferentChildDifferentAnimationExamples() {
+    Box(modifier = Modifier.fillMaxSize()) {
+        var isItemVisible by remember {
+            mutableStateOf(false)
+        }
+
+        Column(modifier = Modifier.fillMaxWidth()) {
+            AnimatedVisibility(
+                enter = fadeIn(tween(2000)),
+                exit = fadeOut(tween(2000)),
+                visible = isItemVisible, modifier = Modifier
+                    .fillMaxSize()
+            ) {
+                Column {
+                    Image(
+                        modifier = Modifier.animateEnterExit(
+                            enter = expandVertically(),
+                            exit = shrinkVertically()
+                        ),
+                        painter = painterResource(id = R.drawable.kodee),
+                        contentDescription = "Kodee"
+                    )
+                    Image(
+                        modifier = Modifier.animateEnterExit(
+                            enter = scaleIn(tween(1500)), exit = scaleOut(
+                                tween(1500)
+                            )
+                        ),
+                        painter = painterResource(id = R.drawable.kodee),
+                        contentDescription = "Kodee"
+                    )
+                }
+
+            }
+        }
+
+        Button(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 20.dp),
+            onClick = { isItemVisible = !isItemVisible }) {
+            Text(text = "Hide/Unhide")
+        }
+    }
+
+
+}
+
+
 @Preview
 @Composable
 fun AnimatedVisibilityExamplesPrev() {
@@ -215,4 +274,10 @@ fun AnimatedVisibilityStatePrev() {
 @Composable
 fun AnimatedVisibilityOnceExamplePrev() {
     AnimatedVisibilityAnimateOnceOnly()
+}
+
+@Preview
+@Composable
+fun AnimatedVisibilityDifferentChildDifferentAnimationExamplesPrev() {
+    AnimatedVisibilityDifferentChildDifferentAnimationExamples()
 }
