@@ -3,7 +3,6 @@ package com.bharatsdk.animationsexamples.ui
 import androidx.compose.animation.core.EaseInBounce
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearOutSlowInEasing
-import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.keyframes
@@ -94,11 +93,10 @@ fun KeyframeExample() {
         animationSpec = keyframes {
             //total duration
             durationMillis = 5000
-            0.0f at 0  with LinearOutSlowInEasing// for 0-15 ms
-            0.2f at 1000  // for 15-75 ms
-            0.5f at 2500 // ms
-            0.7f at 4000  with EaseInBounce// m
-                                  // s
+            0.0f at 0 with LinearOutSlowInEasing
+            0.2f at 1000
+            0.5f at 2500
+            0.7f at 4000 with EaseInBounce
         },
         label = "KeyframeExample",
     )
